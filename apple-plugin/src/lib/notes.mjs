@@ -24,19 +24,31 @@ function parseLines(output) {
     });
 }
 
-function listScript() {
+function listScript(limit = 50, includePreview = false) {
   return `
 tell application "Notes"
   set outputLines to {}
-  repeat with eachNote in notes
+  set noteList to notes
+  set noteCount to count of noteList
+  if noteCount > ${limit} then
+    set noteList to items 1 thru ${limit} of noteList
+  end if
+  repeat with eachNote in noteList
     set noteId to id of eachNote as text
     set noteName to name of eachNote as text
-    set folderName to name of container of eachNote as text
-    set noteBody to plaintext of eachNote as text
-    if (length of noteBody) > 160 then
-      set notePreview to text 1 thru 160 of noteBody
-    else
-      set notePreview to noteBody
+    try
+      set folderName to name of container of eachNote as text
+    on error
+      set folderName to ""
+    end try
+    set notePreview to ""
+    if ${includePreview ? "true" : "false"} then
+      set noteBody to plaintext of eachNote as text
+      if (length of noteBody) > 160 then
+        set notePreview to text 1 thru 160 of noteBody
+      else
+        set notePreview to noteBody
+      end if
     end if
     set end of outputLines to noteId & tab & noteName & tab & folderName & tab & notePreview
   end repeat
@@ -63,8 +75,8 @@ function resolveUniqueNote(notes, name, folder) {
   return matches[0];
 }
 
-export async function listNotes({ folder }) {
-  const notes = parseLines(runAppleScript(listScript()));
+export async function listNotes({ folder, limit = 50, includePreview = false }) {
+  const notes = parseLines(runAppleScript(listScript(limit, includePreview)));
   if (!folder) {
     return notes;
   }
@@ -73,7 +85,7 @@ export async function listNotes({ folder }) {
 
 export async function searchNotes({ query, folder, limit = 25 }) {
   const lowered = query.toLowerCase();
-  const notes = await listNotes({ folder });
+  const notes = await listNotes({ folder, limit: Math.max(limit * 5, 100), includePreview: true });
   return notes
     .filter((note) => {
       const haystack = `${note.name}\n${note.preview}`.toLowerCase();

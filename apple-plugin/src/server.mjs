@@ -58,6 +58,8 @@ server.tool(
   "List Apple Notes, optionally filtered by folder.",
   {
     folder: z.string().optional(),
+    limit: z.number().int().min(1).max(200).default(50),
+    includePreview: z.boolean().default(false),
   },
   async (input) => toContent(await listNotes(input)),
 );
