@@ -1,4 +1,4 @@
-# Apple Skills
+# Apple Use
 
 [![MIT License](https://img.shields.io/badge/license-MIT-green.svg)](./LICENSE)
 [![macOS](https://img.shields.io/badge/platform-macOS-black.svg)](https://www.apple.com/macos/)
@@ -6,11 +6,11 @@
 
 Local-first Apple app tooling for coding agents on macOS, packaged as a Codex plugin and preserved as canonical skills.
 
-Repo: [github.com/longbiaochen/apple-skills](https://github.com/longbiaochen/apple-skills)
+Repo: [github.com/longbiaochen/apple-use](https://github.com/longbiaochen/apple-use)
 
 This repository now ships two coordinated surfaces:
 
-- `apple-plugin/`: the preferred Codex-local plugin with one MCP install surface
+- `apple-use/`: the preferred Codex-local plugin with one MCP install surface
 - the canonical root skill folders, which remain the source of truth for behavior and fallback use
 
 The canonical root skills are:
@@ -35,7 +35,7 @@ Most AI workflows reach for browser automation or third-party APIs. This repo ta
 
 The package has one plugin-first Codex surface and four canonical root skills:
 
-- `apple-plugin`: local Codex plugin with an MCP server for doctor, notes, reminders, and mail
+- `apple-use`: local Codex plugin with an MCP server for doctor, notes, reminders, and mail
 - `apple-ecosystem`: root router skill
 - `apple-notes`: root Notes skill
 - `apple-reminders`: root Reminders skill
@@ -53,7 +53,7 @@ CLAUDE.md
 .agents/
   plugins/
     marketplace.json
-apple-plugin/
+apple-use/
   .codex-plugin/
     plugin.json
   .mcp.json
@@ -65,7 +65,7 @@ apple-plugin/
     print-codex-config.mjs
     run-doctor.mjs
   skills/
-    apple-plugin/
+    apple-use/
       SKILL.md
       agents/openai.yaml
   src/
@@ -108,14 +108,14 @@ docs/
 
 | Runtime | Entry point | Notes |
 | --- | --- | --- |
-| Codex plugin | `apple-plugin/` | Preferred one-install Codex surface with MCP tools. |
+| Codex plugin | `apple-use/` | Preferred one-install Codex surface with MCP tools. |
 | Codex / OpenAI skills | root skill folders + `SKILL.md` | Direct skill fallback when you do not want the plugin. |
 | Claude | `CLAUDE.md` | Use the repo-level adapter, then follow the relevant skill. |
 | AGENTS-style runtimes, including OpenClaw | `AGENTS.md` | Use the repo-level adapter, then follow the relevant skill. |
 
 ## Repo Links
 
-- GitHub repo: [github.com/longbiaochen/apple-skills](https://github.com/longbiaochen/apple-skills)
+- GitHub repo: [github.com/longbiaochen/apple-use](https://github.com/longbiaochen/apple-use)
 - Canonical contract: [docs/agent-contract.md](./docs/agent-contract.md)
 - AGENTS adapter: [AGENTS.md](./AGENTS.md)
 - Claude adapter: [CLAUDE.md](./CLAUDE.md)
@@ -128,21 +128,21 @@ docs/
 Install the plugin into your local Codex plugins directory:
 
 ```bash
-cd /path/to/your/apple-skills/apple-plugin
+cd /path/to/your/apple-use/apple-use
 npm install
 ./scripts/install-local-plugin.sh
 ```
 
 This gives Codex one plugin entry point that bundles:
 
-- the `apple-plugin` skill
-- the `apple-plugin` MCP server
+- the `apple-use` skill
+- the `apple-use` MCP server
 - Notes, Reminders, Mail, and doctor tools in one local package
 
 If you want a direct `config.toml` snippet instead of plugin discovery, print one with:
 
 ```bash
-node ./apple-plugin/scripts/print-codex-config.mjs
+node ./apple-use/scripts/print-codex-config.mjs
 ```
 
 ### Canonical Skill Fallback
@@ -150,7 +150,7 @@ node ./apple-plugin/scripts/print-codex-config.mjs
 Copy or symlink the root skill folders into your Codex skills directory when you want direct skill installs without the plugin:
 
 ```bash
-cd /path/to/your/apple-skills
+cd /path/to/your/apple-use
 cp -R apple-ecosystem apple-mail apple-notes apple-reminders ~/.codex/skills/
 ```
 
@@ -169,8 +169,8 @@ Read [`AGENTS.md`](./AGENTS.md) as the repo-level adapter, then consult the rele
 Run the underlying tools directly before using the skills or plugin:
 
 ```bash
-npm --prefix apple-plugin install
-npm --prefix apple-plugin run doctor
+npm --prefix apple-use install
+npm --prefix apple-use run doctor
 memo --help
 remindctl --help
 remindctl status

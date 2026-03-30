@@ -1,6 +1,6 @@
 {
   "mcpServers": {
-    "apple-plugin": {
+    "apple-use": {
       "type": "stdio",
       "command": "node",
       "args": [

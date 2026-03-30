@@ -1,6 +1,6 @@
 # Launch Post
 
-I open-sourced `apple-skills`, a focused local-first Apple app skill pack for coding agents on macOS.
+I open-sourced `apple-use`, a focused local-first Apple app skill pack for coding agents on macOS.
 
 What it includes:
 
@@ -23,4 +23,4 @@ The repo includes install and consumption docs for Codex, Claude, and AGENTS-sty
 
 Feedback on portability, Mail schema differences, and additional Apple app skills is welcome.
 
-Repo: https://github.com/longbiaochen/apple-skills
+Repo: https://github.com/longbiaochen/apple-use

@@ -1,4 +1,4 @@
-Show HN: Apple Skills, a local-first macOS skill pack for coding agents
+Show HN: Apple Use, a local-first macOS skill pack for coding agents
 
 I packaged a small set of Apple app skills I use on macOS into an open-source repo:
 
@@ -18,4 +18,4 @@ The package is intentionally narrow. It focuses on:
 
 One caveat: the Mail action helper currently assumes Apple Mail's V10 Envelope Index path/schema, so portability feedback across macOS versions would be useful.
 
-Repo: https://github.com/longbiaochen/apple-skills
+Repo: https://github.com/longbiaochen/apple-use

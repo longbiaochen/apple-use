@@ -1,8 +1,8 @@
-# Apple Skills For AGENTS-Style Runtimes
+# Apple Use For AGENTS-Style Runtimes
 
 This repo is a universal, local-first Apple app skill pack for macOS agents.
 
-For Codex specifically, the preferred install surface is the local `apple-plugin/` package. The root skill folders below remain canonical.
+For Codex specifically, the preferred install surface is the local `apple-use/` package. The root skill folders below remain canonical.
 
 The canonical behavior lives in the skill folders:
 
@@ -29,6 +29,7 @@ Read [docs/agent-contract.md](./docs/agent-contract.md) for the shared invariant
 
 ## Canonical Command Examples
 
+- Plugin install/doctor: `npm --prefix apple-use run doctor`, `bash apple-use/scripts/install-local-plugin.sh`
 - Notes: `memo notes`, `memo notes -s "query"`, `memo notes -a "Note Title"`
 - Reminders: `remindctl today`, `remindctl add --title "Call mom" --list Personal --due tomorrow`, `remindctl complete 1 2 3`
 - Mail search/read: `fruitmail unread --json`, `fruitmail recent 7 --json`, `fruitmail body 94695 --json`, `fruitmail open 94695`
@@ -44,7 +45,7 @@ Read [docs/agent-contract.md](./docs/agent-contract.md) for the shared invariant
 
 ## How To Consume This Repo
 
-- For Codex, prefer `apple-plugin/` when you want one plugin install with an MCP server.
+- For Codex, prefer `apple-use/` when you want one plugin install with an MCP server.
 - If your runtime supports folder-level skills, use the four skill folders directly.
 - If your runtime supports only repo-level agent instructions, use this file as the adapter and read the matching `SKILL.md` file before acting.
 - Treat the skill folders as canonical and this file as a routing shim.

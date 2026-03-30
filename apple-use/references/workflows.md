@@ -1,13 +1,13 @@
-# Apple Plugin Workflows
+# Apple Use Workflows
 
 ## Install
 
-Install the plugin into Codex by symlinking or copying `apple-plugin/` into `~/.codex/plugins/local/apple-plugin`.
+Install the plugin into Codex by symlinking or copying `apple-use/` into `~/.codex/plugins/local/apple-use`.
 
 Quick install:
 
 ```bash
-cd /path/to/apple-skills/apple-plugin
+cd /path/to/apple-use/apple-use
 ./scripts/install-local-plugin.sh
 ```
 

@@ -8,7 +8,7 @@ homepage: https://github.com/steipete/remindctl
 
 Use `remindctl` to manage Apple Reminders directly from the terminal.
 
-If the `apple-plugin` Codex plugin is installed, prefer its `apple_reminders_*` MCP tools first. Fall back to `remindctl` when the plugin is unavailable.
+If the `apple-use` Codex plugin is installed, prefer its `apple_reminders_*` MCP tools first. Fall back to `remindctl` when the plugin is unavailable.
 
 Setup:
 

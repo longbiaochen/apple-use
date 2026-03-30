@@ -46,7 +46,7 @@ function withDeleteConfirmation(confirm, label) {
 }
 
 const server = new McpServer({
-  name: "apple-plugin",
+  name: "apple-use",
   version: "0.1.0",
 });
 

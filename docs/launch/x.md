@@ -1,4 +1,4 @@
-Built and open-sourced `apple-skills`: a local-first Apple app skill pack for coding agents on macOS.
+Built and open-sourced `apple-use`: a local-first Apple app skill pack for coding agents on macOS.
 
 It now works as a canonical skill pack for:
 - Codex / OpenAI skills
@@ -14,4 +14,4 @@ The point is simple: use the apps already on your Mac instead of defaulting to b
 
 Canonical behavior stays in the skill folders. Repo-level `AGENTS.md` and `CLAUDE.md` adapt the same behavior for other runtimes.
 
-Repo: https://github.com/longbiaochen/apple-skills
+Repo: https://github.com/longbiaochen/apple-use

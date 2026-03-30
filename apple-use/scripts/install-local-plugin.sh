@@ -2,7 +2,7 @@
 set -euo pipefail
 
 plugin_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-target_dir="${HOME}/.codex/plugins/local/apple-plugin"
+target_dir="${HOME}/.codex/plugins/local/apple-use"
 
 mkdir -p "${HOME}/.codex/plugins/local"
 
@@ -14,7 +14,7 @@ fi
 ln -sfn "${plugin_dir}" "${target_dir}"
 
 cat <<EOF
-Installed apple-plugin at:
+Installed apple-use at:
   ${target_dir}
 
 Codex should discover the plugin from ~/.codex/plugins/local.

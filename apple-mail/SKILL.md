@@ -8,7 +8,7 @@ homepage: https://github.com/gumadeiras/fruitmail-cli
 
 Use Apple Mail through local tools already available on macOS.
 
-If the `apple-plugin` Codex plugin is installed, prefer its `apple_mail_*` MCP tools first. Fall back to the direct commands in this skill when the plugin is unavailable.
+If the `apple-use` Codex plugin is installed, prefer its `apple_mail_*` MCP tools first. Fall back to the direct commands in this skill when the plugin is unavailable.
 
 Tool split:
 

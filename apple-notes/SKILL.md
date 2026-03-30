@@ -8,7 +8,7 @@ homepage: https://github.com/antoniorodr/memo
 
 Use `memo notes` to manage Apple Notes directly from the terminal.
 
-If the `apple-plugin` Codex plugin is installed, prefer its `apple_notes_*` MCP tools first. Fall back to `memo notes` when the plugin is unavailable.
+If the `apple-use` Codex plugin is installed, prefer its `apple_notes_*` MCP tools first. Fall back to `memo notes` when the plugin is unavailable.
 
 Setup:
 

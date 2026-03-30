@@ -1,14 +1,14 @@
 {
-  "name": "apple-skills",
+  "name": "apple-use",
   "interface": {
-    "displayName": "Apple Skills Plugins"
+    "displayName": "Apple Use Plugins"
   },
   "plugins": [
     {
-      "name": "apple-plugin",
+      "name": "apple-use",
       "source": {
         "source": "local",
-        "path": "./apple-plugin"
+        "path": "./apple-use"
       },
       "policy": {
         "installation": "AVAILABLE",
