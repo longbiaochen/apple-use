@@ -1,59 +1,65 @@
-# Apple Use For AGENTS-Style Runtimes
+# Apple-Use Runbook
 
-This repo is a universal, local-first Apple app skill pack for macOS agents.
+## Repo Scope
 
-For Codex specifically, the preferred install surface is the local `apple-use/` package. The root skill folders below remain canonical.
+- Owner/escalation: Longbiao for local macOS tooling; app-specific failures escalate to the native Apple app/CLI state.
+- This legacy repo is retained for explicit maintenance only.
+- It owns the local-first Apple app skill/plugin pack for macOS: `apple-ecosystem`, `apple-mail`, `apple-notes`, and `apple-reminders`.
+- Do not install it into the local Codex environment by default, and do not route Codex here unless the user explicitly names this repo.
 
-The canonical behavior lives in the skill folders:
+## Canonical Commands
 
-- `apple-ecosystem`
-- `apple-mail`
-- `apple-notes`
-- `apple-reminders`
+- Repo doctor: `npm --prefix apple-use run doctor`
+- Local plugin install: `bash apple-use/scripts/install-local-plugin.sh`
+- Notes list/search: `memo notes` or `memo notes -s "query"`
+- Reminders: `remindctl today` or `remindctl add --title "Task" --list Personal --due tomorrow`
+- Mail reads: `fruitmail unread --json`
+- Mail draft: `apple-mail/scripts/mail_draft.sh --to alice@example.com --subject "Hello" --body "Hi"`
 
-Read [docs/agent-contract.md](./docs/agent-contract.md) for the shared invariants. Do not invent behavior that conflicts with those canonical skills.
+## Routine Operations
 
-## Routing
+| Trigger | Command | Expected Result | Failure Recovery |
+| --- | --- | --- | --- |
+| Verify plugin health | `npm --prefix apple-use run doctor` | Doctor confirms usable local tool wiring | Inspect the failing Apple app CLI directly before changing plugin metadata |
+| Install local plugin intentionally | `bash apple-use/scripts/install-local-plugin.sh` | Local Codex/OpenClaw plugin path points to this repo | Re-run doctor and verify the expected MCP tool appears |
+| Draft email | `apple-mail/scripts/mail_draft.sh --to <addr> --subject <subject> --body <body>` | Draft is created without sending by default | Use `fruitmail`/Mail.app state to locate draft before retrying |
 
-- Notes or Apple Notes requests -> `apple-notes`
-- Reminders requests -> `apple-reminders`
-- Mail.app, inbox triage, draft/send/search email -> `apple-mail`
-- Mixed Apple app requests -> start with `apple-ecosystem`
+## Troubleshooting
 
-## Tool Mapping
+| Trigger | Command | Expected Result | Failure Recovery |
+| --- | --- | --- | --- |
+| Notes/Reminders fail | `memo notes` or `remindctl today` | Native CLI reproduces or clears the issue | Repair app permission/account state before touching skill instructions |
+| Mail automation fails | `fruitmail unread --json` | Mail index and account access are readable | Fall back to metadata-only or local Mail CLI path; avoid browser automation |
 
-- Apple Notes -> `memo`
-- Apple Reminders -> `remindctl`
-- Apple Mail search/read -> `fruitmail`
-- Apple Mail draft/send/message actions -> `apple-mail/scripts/mail_draft.sh`, `apple-mail/scripts/mail_action.sh`, and `osascript` when needed
+## Verification
 
-## Canonical Command Examples
+- Prefer native Apple app CLIs over browser automation.
+- For repo/plugin changes, run `npm --prefix apple-use run doctor` and one live command in the affected skill area.
+- Draft email before send by default.
 
-- Plugin install/doctor: `npm --prefix apple-use run doctor`, `bash apple-use/scripts/install-local-plugin.sh`
-- Notes: `memo notes`, `memo notes -s "query"`, `memo notes -a "Note Title"`
-- Reminders: `remindctl today`, `remindctl add --title "Call mom" --list Personal --due tomorrow`, `remindctl complete 1 2 3`
-- Mail search/read: `fruitmail unread --json`, `fruitmail recent 7 --json`, `fruitmail body 94695 --json`, `fruitmail open 94695`
-- Mail draft/send/actions: `apple-mail/scripts/mail_draft.sh --to alice@example.com --subject "Hello" --body "Hi Alice"`, `apple-mail/scripts/mail_action.sh --id 49559 --action archive`
+## Release/Deploy
 
-## Safety Defaults
+- This repo is not part of default Codex runtime installation.
+- Only update local plugin install paths when the task explicitly targets `apple-use`.
+
+## Guardrails
 
 - Keep workflows local-first on macOS.
-- Prefer native Apple app CLIs over browser automation.
-- Draft email before send by default.
-- Confirm destructive or ambiguous writes before executing them.
 - Do not introduce third-party APIs or OAuth when the local Apple app setup already provides the needed capability.
+- Treat `~/.openclaw` as separate host state unless the task is explicitly about that environment.
 
-## How To Consume This Repo
+## Known State
 
-- For Codex, prefer `apple-use/` when you want one plugin install with an MCP server.
-- If your runtime supports folder-level skills, use the four skill folders directly.
-- If your runtime supports only repo-level agent instructions, use this file as the adapter and read the matching `SKILL.md` file before acting.
-- Treat the skill folders as canonical and this file as a routing shim.
+- Local Codex plugin install path has historically been `~/.codex/plugins/local/apple-use`.
+- Mail was previously the most reliable live verification path; Notes/Reminders can depend on machine-side permission/account state.
+
+## Browser Automation Constraint
+- Follow the global `~/.codex/AGENTS.md` official browser/GUI automation policy: Chrome plugin for signed-in browser state, Browser plugin for unauthenticated rendering, and Computer Use for native desktop boundaries. Do not bypass it with AppleScript or `osascript` unless the global exception rules are met.
+- Keep only repo-specific verification surfaces here; do not copy the full global policy block into this runbook.
 
 ## Worktree Policy
 
-- Follow the global `~/.codex/AGENTS.md` worktree-first rule for Codex development: new non-read-only coding or multi-file documentation tasks should start in a dedicated Codex-managed worktree.
-- Use the Local checkout only for read-only investigation, final handoff/inspection, tasks that must reuse a single running app/server, or when the user explicitly asks to stay local.
+- Follow the global `~/.codex/AGENTS.md` main-first development rule: work in the current Local checkout by default and use a worktree only when the global exception list applies.
 - Branch names should use `codex/<repo>-<short-task>`; manual long-lived worktree directories should use `~/Projects/<repo>-<short-task>`.
 - Initialize dependencies inside each worktree and keep ports, databases, device/simulator state, build outputs, and ignored local config isolated per checkout.
 - Preserve existing dirty checkouts. Inspect `git status --short` before editing, and do not stash, commit, remove, or migrate user changes unless explicitly asked.
