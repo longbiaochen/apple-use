@@ -1,2 +1,4 @@
-name: apple-use
-description: Codex-local Apple Use plugin with MCP-backed Notes, Reminders, Mail, and doctor tools for macOS.
+interface:
+  display_name: "Apple Use"
+  short_description: "Use local Apple Notes and Reminders tools"
+  default_prompt: "Use $apple-use for Apple Notes or Reminders. Route email to the Himalaya-first $apple-mail workflow."

@@ -3,15 +3,6 @@ import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js"
 import { z } from "zod";
 import { runDoctor } from "./lib/doctor.mjs";
 import {
-  draftMail,
-  mailAction,
-  mailBody,
-  openMail,
-  recentMail,
-  searchMail,
-  unreadMail,
-} from "./lib/mail.mjs";
-import {
   createNote,
   deleteNote,
   listNotes,
@@ -187,102 +178,6 @@ server.tool(
   async (input) => {
     withDeleteConfirmation(input.confirm, "apple_reminders_delete");
     return toContent(await deleteReminder(input));
-  },
-);
-
-server.tool(
-  "apple_mail_search",
-  "Search Apple Mail through fruitmail.",
-  {
-    subject: z.string().optional(),
-    sender: z.string().optional(),
-    fromName: z.string().optional(),
-    to: z.string().optional(),
-    unread: z.boolean().optional(),
-    read: z.boolean().optional(),
-    days: z.number().int().min(1).max(365).optional(),
-    hasAttachment: z.boolean().optional(),
-    attachmentType: z.string().optional(),
-  },
-  async (input) => toContent(await searchMail(input)),
-);
-
-server.tool("apple_mail_unread", "List unread Apple Mail messages.", async () =>
-  toContent(await unreadMail()),
-);
-
-server.tool(
-  "apple_mail_recent",
-  "List recent Apple Mail messages.",
-  {
-    days: z.number().int().min(1).max(365).default(7),
-  },
-  async (input) => toContent(await recentMail(input.days)),
-);
-
-server.tool(
-  "apple_mail_body",
-  "Get a message body by local Mail id.",
-  {
-    id: z.union([z.string(), z.number()]),
-  },
-  async (input) => toContent(await mailBody(input.id)),
-);
-
-server.tool(
-  "apple_mail_open",
-  "Open a message in Apple Mail by local Mail id.",
-  {
-    id: z.union([z.string(), z.number()]),
-  },
-  async (input) => toContent(await openMail(input.id)),
-);
-
-server.tool(
-  "apple_mail_compose",
-  "Draft or send a new Apple Mail message.",
-  {
-    to: z.array(z.string().email()).min(1),
-    cc: z.array(z.string().email()).optional(),
-    bcc: z.array(z.string().email()).optional(),
-    subject: z.string(),
-    body: z.string(),
-    sendNow: z.boolean().default(false),
-    confirmSend: z.boolean().default(false),
-  },
-  async (input) => {
-    if (input.sendNow && !input.confirmSend) {
-      throw new Error("Sending mail requires confirmSend=true.");
-    }
-    return toContent(await draftMail(input));
-  },
-);
-
-server.tool(
-  "apple_mail_action",
-  "Perform an exact-message Mail action by local Mail id.",
-  {
-    id: z.union([z.string(), z.number()]),
-    action: z.enum([
-      "flag",
-      "unflag",
-      "read",
-      "unread",
-      "archive",
-      "junk",
-      "trash",
-      "move",
-      "info",
-    ]),
-    targetMailbox: z.string().optional(),
-    confirm: z.boolean().default(false),
-  },
-  async (input) => {
-    const risky = new Set(["archive", "junk", "trash", "move"]);
-    if (risky.has(input.action) && !input.confirm) {
-      throw new Error(`Mail action "${input.action}" requires confirm=true.`);
-    }
-    return toContent(await mailAction(input));
   },
 );
 

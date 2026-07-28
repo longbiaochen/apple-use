@@ -13,12 +13,12 @@ They use local macOS tools instead of web automation:
 
 - `memo` for Notes
 - `remindctl` for Reminders
-- `fruitmail` plus helper scripts for Mail
+- the standalone Himalaya-first `apple-mail` skill, with Apple Mail for review
 
 The repo now treats the skill folders as canonical and adds repo-level adapters for Claude and `AGENTS.md` runtimes like OpenClaw, so the same local-first behavior works across multiple coding agents.
 
 The repo includes install docs, permission guidance, usage recipes, and launch copy. It is meant for people who want practical local-first agent workflows on a Mac.
 
-One known limitation is that the Mail action helper is tied to Apple Mail's current V10 Envelope Index path/schema, so I documented that rather than hiding it.
+Mail now stays on the native app surface and does not read the Envelope Index or use AppleScript helpers.
 
 Repo: https://github.com/longbiaochen/apple-use

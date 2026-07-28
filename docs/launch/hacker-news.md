@@ -4,7 +4,7 @@ I packaged a small set of Apple app skills I use on macOS into an open-source re
 
 - Apple Notes via `memo`
 - Apple Reminders via `remindctl`
-- Apple Mail via `fruitmail` and a pair of AppleScript-backed helper scripts
+- Email via the Himalaya-first `apple-mail` skill, with Apple Mail for review
 
 The goal is to make agent workflows use the Apple apps already configured on a Mac instead of defaulting to browser automation or provider APIs.
 
@@ -14,8 +14,8 @@ The package is intentionally narrow. It focuses on:
 - explicit permission and setup guidance
 - canonical `SKILL.md` files as the source of truth
 - repo-level adapters for Claude and AGENTS-style runtimes
-- practical Mail drafting and exact-message actions
+- focused-window Mail drafting, attachments, and sent-state verification
 
-One caveat: the Mail action helper currently assumes Apple Mail's V10 Envelope Index path/schema, so portability feedback across macOS versions would be useful.
+Mail no longer reads Apple Mail databases or uses AppleScript helpers; Himalaya is the protocol source of truth and the native app remains the review surface.
 
 Repo: https://github.com/longbiaochen/apple-use

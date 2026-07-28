@@ -1,12 +1,10 @@
 import { runCommand, which } from "./shell.mjs";
-import { mailActionScript, mailDraftScript } from "./paths.mjs";
 
 const CHECKS = [
   { name: "memo", kind: "cli" },
   { name: "remindctl", kind: "cli" },
-  { name: "fruitmail", kind: "cli" },
+  { name: "himalaya", kind: "cli" },
   { name: "osascript", kind: "system" },
-  { name: "sqlite3", kind: "system" },
   { name: "shortcuts", kind: "system" },
 ];
 
@@ -20,30 +18,8 @@ function checkTool(name, kind) {
   };
 }
 
-function checkMailScripts() {
-  const draft = runCommand("bash", ["-n", mailDraftScript]);
-  const action = runCommand("bash", ["-n", mailActionScript]);
-
-  return {
-    draftScriptOk: draft.status === 0,
-    actionScriptOk: action.status === 0,
-    draftScriptStatus: draft.status,
-    actionScriptStatus: action.status,
-    draftScriptError: draft.stderr.trim() || null,
-    actionScriptError: action.stderr.trim() || null,
-  };
-}
-
 function checkRemindersStatus() {
   const result = runCommand("remindctl", ["status"]);
-  return {
-    ok: result.status === 0,
-    output: (result.stdout || result.stderr).trim(),
-  };
-}
-
-function checkMailVersion() {
-  const result = runCommand("osascript", ["-e", 'tell application "Mail" to get version']);
   return {
     ok: result.status === 0,
     output: (result.stdout || result.stderr).trim(),
@@ -68,15 +44,29 @@ function checkNotesStatus() {
   };
 }
 
+function checkMailStatus() {
+  const version = runCommand("himalaya", ["--version"]);
+  const accounts = runCommand("himalaya", ["account", "list", "--json"]);
+
+  return {
+    versionOk: version.status === 0,
+    version: (version.stdout || version.stderr).trim(),
+    accountsOk: accounts.status === 0,
+    accounts: accounts.status === 0
+      ? JSON.parse(accounts.stdout)
+      : (accounts.stdout || accounts.stderr).trim(),
+    executionSurface: "Himalaya",
+    reviewSurface: "Apple Mail",
+    nativeEdgeSurface: "macos-use",
+  };
+}
+
 export async function runDoctor() {
   return {
     generatedAt: new Date().toISOString(),
     tools: CHECKS.map((tool) => checkTool(tool.name, tool.kind)),
     reminders: checkRemindersStatus(),
     notes: checkNotesStatus(),
-    mail: {
-      version: checkMailVersion(),
-      scripts: checkMailScripts(),
-    },
+    mail: checkMailStatus(),
   };
 }

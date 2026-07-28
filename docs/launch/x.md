@@ -8,7 +8,7 @@ It now works as a canonical skill pack for:
 It routes tasks across:
 - Apple Notes via `memo`
 - Apple Reminders via `remindctl`
-- Apple Mail via `fruitmail` + AppleScript helpers
+- Email via the Himalaya-first `apple-mail` skill, with Apple Mail as the review surface
 
 The point is simple: use the apps already on your Mac instead of defaulting to browser automation or new OAuth flows.
 

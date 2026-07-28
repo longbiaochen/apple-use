@@ -1,23 +1,20 @@
 # Apple Use Agent Contract
 
-`apple-use` is a multi-agent macOS skill pack. The canonical behavior lives in the four root skill folders:
+The canonical behavior lives in:
 
 - `apple-ecosystem`
 - `apple-mail`
 - `apple-notes`
 - `apple-reminders`
 
-Root adapter docs such as `README.md`, `AGENTS.md`, and `CLAUDE.md` must mirror those skills and must not redefine behavior.
+Root adapters and the `apple-use` plugin must mirror these skills.
 
-The Codex-local `apple-use` packages these workflows into one plugin and MCP server, but it must follow the same routing and safety defaults.
-
-## Shared Invariants
+## Shared invariants
 
 - Keep workflows local-first on macOS.
-- Use the existing Apple apps and local CLIs before browser automation or third-party APIs.
-- Route Notes requests to `apple-notes` and use `memo`.
-- Route Reminders requests to `apple-reminders` and use `remindctl`.
-- Route Mail search and read requests to `apple-mail` and use `fruitmail`.
-- Route Mail drafts, sends, and exact-message actions to `apple-mail` helper scripts or AppleScript when needed.
-- Draft email before send unless the user explicitly asks to send.
-- Confirm destructive or ambiguous actions before executing them.
+- Route Notes to `apple-notes` and `memo`.
+- Route Reminders to `apple-reminders` and `remindctl`.
+- Route every email task to `apple-mail`; use Himalaya for protocol operations, Apple Mail for review, and `macos-use` only for native Mail edge behavior.
+- The plugin must not expose `apple_mail_*` tools or use `fruitmail`, AppleScript/`osascript` Mail helpers, private APIs, or direct Mail databases.
+- Follow `apple-mail` for send authorization, bounded traversal, compose-window counting, attachments, and sent-state verification.
+- Confirm destructive or ambiguous Notes and Reminders actions.

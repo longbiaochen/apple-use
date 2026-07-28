@@ -1,4 +1,4 @@
 interface:
   display_name: "Apple Mail"
-  short_description: "Search, read, draft, and act on Apple Mail locally"
-  default_prompt: "Use $apple-mail to work with Mail.app through local tools."
+  short_description: "Automate email with Himalaya and review in Apple Mail"
+  default_prompt: "Use $apple-mail with Himalaya as the primary email surface, Apple Mail for review, and macos-use only for native Mail edge behavior."

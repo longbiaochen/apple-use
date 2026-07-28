@@ -21,6 +21,6 @@ Why I built it:
 
 The repo includes install and consumption docs for Codex, Claude, and AGENTS-style runtimes such as OpenClaw, plus permission guidance and usage recipes.
 
-Feedback on portability, Mail schema differences, and additional Apple app skills is welcome.
+Feedback on the Himalaya-first Mail workflow, native Apple Mail review, and additional Apple app skills is welcome.
 
 Repo: https://github.com/longbiaochen/apple-use

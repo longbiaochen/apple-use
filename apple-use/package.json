@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "description": "Codex-local Apple Notes, Reminders, and Mail plugin backed by a local MCP server.",
+  "description": "Codex-local Apple Notes and Reminders plugin. Email routes to the standalone Himalaya-first apple-mail skill.",
   "scripts": {
     "start": "node ./src/server.mjs",
     "check": "node --check ./src/server.mjs && node --check ./scripts/print-codex-config.mjs",

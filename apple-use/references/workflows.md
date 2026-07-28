@@ -2,35 +2,23 @@
 
 ## Install
 
-Install the plugin into Codex by symlinking or copying `apple-use/` into `~/.codex/plugins/local/apple-use`.
-
-Quick install:
+Install this plugin only for Apple Notes and Reminders:
 
 ```bash
 cd /path/to/apple-use/apple-use
 ./scripts/install-local-plugin.sh
 ```
 
-## Tool Routing
+## Tool routing
 
-- `apple_doctor`: dependency and permission checks
-- `apple_notes_*`: list, search, create, update, and delete notes
-- `apple_reminders_*`: show, authorize, list lists, add, edit, complete, and delete reminders
-- `apple_mail_*`: search/read/open mail, create draft, send draft-like compose flows, and exact message actions
+- `apple_doctor`: Notes/Reminders dependency and permission checks
+- `apple_notes_*`: Apple Notes operations
+- `apple_reminders_*`: Apple Reminders operations
+- any Mail or email request: standalone `apple-mail` skill with Himalaya first; `macos-use` only for native Mail edge behavior
 
-## Fallback Model
+The retired `apple_mail_*` tools and their `fruitmail`, AppleScript, and Mail database implementations must not be restored as fallbacks.
 
-If the plugin is not installed:
+## Safety
 
-- use `apple-ecosystem/SKILL.md` as the router
-- use the app-specific canonical skills directly
-- keep the same local-first safety defaults
-
-## Safety Model
-
-- Mail drafts come before send unless the user explicitly requests send.
-- Mail deletes, archives, and mailbox moves require explicit user intent.
-- Reminder and note deletes require explicit confirmation.
-- Reminders authorization can be triggered through `apple_reminders_authorize`, but macOS may still require the user to approve Terminal in System Settings.
-- Notes calls fail fast when the Notes AppleScript bridge is blocked or too slow, and `apple_doctor` reports that state explicitly.
-- The plugin does not introduce provider APIs or new OAuth flows when local Apple tooling is enough.
+- Confirm destructive or ambiguous Notes and Reminders actions.
+- Follow `apple-mail` for all Mail authorization and verification rules.
